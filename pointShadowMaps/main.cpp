@@ -109,10 +109,10 @@ public:
 
 		float vertices3[] = {
 	        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
-	        0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f,
+	        -0.5f, 0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f,
 	        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
 	        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
-	        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f,
+	        0.5f,  -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f,
 	        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
 
 	        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f,
@@ -130,10 +130,10 @@ public:
 	        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
 
 	        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
-	        0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+	        0.5f,  -0.5f, 0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
 	        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
 	        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
-	        0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+	        0.5f, 0.5f,  -0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
 	        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
 
 	        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f,
@@ -144,10 +144,10 @@ public:
 	        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f,
 
 	        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f,
-	        0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
+	        -0.5f,  0.5f, 0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
 	        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f,
 	        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f,
-	        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f,
+	        0.5f,  0.5f,  -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f,
 	        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f
 		};
 
@@ -164,7 +164,7 @@ public:
 
 		cube = new Mesh(vertices3, sizeof(vertices3), elements3, sizeof(elements3), posAttrib, normalAttrib, texAttrib);
 		meshWall = new Mesh(vertices3, sizeof(vertices3), elements3, sizeof(elements3), posAttrib, normalAttrib, texAttrib);
-		meshWall->setPosition(-3, 2, 3);
+		meshWall->setPosition(-3, 2, 2.7f);
 		meshWall->setScale(1,1,6);
 
 
@@ -245,8 +245,9 @@ public:
 
 	void render(){
 		for(Light *light : sceneLights){
-			light->prepareRender(depthShader);
 			glCullFace(GL_FRONT);
+			light->prepareRender(depthShader);
+
 			renderSceneDefault(*depthShader, true);
 			glCullFace(GL_BACK);
 		}
@@ -340,6 +341,7 @@ int main() {
 	Program program(window);
 
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 
 	while(!glfwWindowShouldClose(window)) {
 		program.update();
