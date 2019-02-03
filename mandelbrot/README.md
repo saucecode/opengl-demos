@@ -13,6 +13,8 @@ Requires a dedicated GPU. Requires GLFW3, and a C++11 compiler. Uses GLAD to loa
 
 Use WASD to move the camera around. Use X and Z to zoom in and out. Use E and Q to increase and decrease the iterations/granularity of the render.
 
+[Here's a short video of the result](https://www.youtube.com/watch?v=lERBDkf8PkM).
+
 ## On Precision
 
 This program includes fragment shaders written for versions `400 core` and `330 core`. Prior to OpenGL 4.0, GLSL shaders had no double precision types by default. You can take note of the huge increase in quality between the two at high zoom levels.
